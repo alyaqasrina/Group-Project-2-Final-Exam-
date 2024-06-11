@@ -10,7 +10,7 @@ Innovators
 3. Yaya ali hassane (1928095)
 
 # Introduction
-PIXLHUNT is a website aimed to guide visitors to trending and iconic places around Kuala 
+PIXLHUNT is a web application aimed to guide visitors to trending and iconic places around Kuala 
 Lumpur. Experience the three boroughs of Kuala Lumpur with PIXLHUNT. Find out what to do, 
 where to go, and what to eat in Kuala Lumpur - the city of contrast and diversity.
 Our organization focuses on Sustainable Development Goal 2 and 8. We aim to focus on 
@@ -19,3 +19,18 @@ promote in our website. We also focus on Sustainable Development Goal 8 which is
 Economic Growth while supporting and promoting local attractions and food through this website. 
 You will also find yourself codes to redeem where this code will help attract customers to the business 
 and introduce new customers to the place.
+
+# Objective of the enhancements
+
+
+# Web Application Security Enhancements
+1) Input Validation
+
+
+
+2) Authentication
+3) Authorization
+4) XSS and CSRF Prevention
+5) Database Security Principles
+6) File Security Principles
+7) 
