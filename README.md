@@ -21,10 +21,11 @@ The objective of the enhancements is to improve the security of the existing web
 
 
 2) Authentication
-   <h3> Methods Used or Implemented:
-Password hashing using password_hash() and password_verify()
-4) Authorization
-5) XSS and CSRF Prevention
-6) Database Security Principles
-7) File Security Principles
+   <h3> Methods Used or Implemented: </h3>
+   # Password hashing using password_hash() and password_verify()
+
+3) Authorization
+4) XSS and CSRF Prevention
+5) Database Security Principles
+6) File Security Principles
    
