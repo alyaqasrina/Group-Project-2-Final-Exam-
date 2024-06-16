@@ -16,19 +16,31 @@ PIXLHUNT is a web application aimed to guide visitors to trending and iconic pla
 The objective of the enhancements is to improve the security of the existing web application by implementing various security measures to protect against common vulnerabilities and ensure the safety and integrity of user data.
 
 # Web Application Security Enhancements
-1) Input Validation
+1) <h3> Input Validation </h3>
 
 
 
-2) Authentication
-   # Methods Used or Implemented:
+2) <h3> Authentication </h3>
+   <h5> Methods Used or Implemented: </h5>
    
    * Password hashing using password_hash() and password_verify()
    * Session management with session_start(), session_regenerate_id()
    * Secure session cookie settings
    * Multi-factor authentication (optional, but recommended for added security)
+  
 
-4) Authorization
+
+
+
+3) Authorization
+    <h5> Methods Used or Implemented: </h5>
+
+    * Role-based access control (RBAC)
+    * Session checks to ensure users have appropriate roles to access resources
+    * Middleware pattern to handle authorization checks
+
+
+
 5) XSS and CSRF Prevention
 6) Database Security Principles
 7) File Security Principles
