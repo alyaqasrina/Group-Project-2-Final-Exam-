@@ -21,9 +21,13 @@ The objective of the enhancements is to improve the security of the existing web
 
 
 2) <h3> Authentication </h3>
+Authentication is the process of verifying the identity of a user. In our web application, we can implement this through user login and registration functionalities.
    <h5> Methods Used or Implemented: </h5>
    
    * Password hashing using password_hash() and password_verify()
+  
+
+
    * Session management with session_start(), session_regenerate_id()
    * Secure session cookie settings
    * Multi-factor authentication (optional, but recommended for added security)
@@ -32,8 +36,12 @@ The objective of the enhancements is to improve the security of the existing web
 
 
 
-3) Authorization
+3) <h3> Authorization </h3>
     <h5> Methods Used or Implemented: </h5>
+    Controller: AuthController.php
+    
+
+The registration method handles user input, validates it, and then saves the new user to the database.
 
     * Role-based access control (RBAC)
     * Session checks to ensure users have appropriate roles to access resources
@@ -41,7 +49,9 @@ The objective of the enhancements is to improve the security of the existing web
 
 
 
-5) XSS and CSRF Prevention
-6) Database Security Principles
-7) File Security Principles
+4) <h3> XSS and CSRF Prevention </h3>
+
+5) <h3> Database Security Principles </h3>
+
+6) <h3> File Security Principles </h3>
    
