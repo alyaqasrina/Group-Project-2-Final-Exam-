@@ -55,6 +55,7 @@ The registration method handles user input, validates it, and then saves the new
 4) <h3> XSS and CSRF Prevention </h3>
 
 5) <h3> Database Security Principles </h3>
+* Included database with db.php with custom username & password.
 
 6) <h3> File Security Principles </h3>
 
