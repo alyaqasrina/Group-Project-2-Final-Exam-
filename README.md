@@ -41,11 +41,7 @@ Authentication is the process of verifying the identity of a user. In our web ap
 
 3) <h3> Authorization </h3>
     <h5> Methods Used or Implemented: </h5>
-    Controller: AuthController.php
-    
-
-The registration method handles user input, validates it, and then saves the new user to the database.
-
+  
     * Role-based access control (RBAC)
     * Session checks to ensure users have appropriate roles to access resources
     * Middleware pattern to handle authorization checks
