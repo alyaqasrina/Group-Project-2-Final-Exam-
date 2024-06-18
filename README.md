@@ -57,4 +57,7 @@ The registration method handles user input, validates it, and then saves the new
 5) <h3> Database Security Principles </h3>
 
 6) <h3> File Security Principles </h3>
+
+* Disable file directory by removing 'Indexes' in httpd.conf (Options Indexes FollowSymLinks Includes ExecCGI)
+  
    
