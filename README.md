@@ -42,9 +42,10 @@ Authentication is the process of verifying the identity of a user. In our web ap
   
 
 
-   * Session management with session_start(), session_regenerate_id()
+     
    * Secure session cookie settings
-   * Multi-factor authentication (optional, but recommended for added security)
+   * SSL Certificate
+   * Two-factor authentication through email verification
   
 
 
@@ -54,8 +55,7 @@ Authentication is the process of verifying the identity of a user. In our web ap
     <h5> Methods Used or Implemented: </h5>
   
     * Role-based access control (RBAC)
-    * Session checks to ensure users have appropriate roles to access resources
-    * Middleware pattern to handle authorization checks
+    * Session management
 
 
 
