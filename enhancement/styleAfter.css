@@ -1,0 +1,87 @@
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            margin: 0;
+        }
+
+        .navbar {
+            overflow: hidden;
+            background-color: #5f6f52;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 50px;
+        }
+        
+        .navbar-one {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding-left: 10px;
+        }
+        
+        .navbar-one a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+        }
+        
+        .navbar a {
+            color: white;
+            text-align: center;
+            text-decoration: none;
+            font-family: 'Lora', serif;
+        }
+        
+        .navbar a.right {
+            padding: 14px 20px;
+        }
+        
+        .navbar a.right:hover {
+            background-color: #a9b388;
+            color: black;
+        }
+        
+        /* PixlHunt logo */
+        #logo-nav {
+            width: 30px;
+            border-radius: 50%;
+            overflow: hidden;
+            vertical-align: middle;
+        }
+        
+        .container {
+            display: flex;
+            width: 100%;
+            flex-wrap: wrap;
+            height: 100%;
+            text-align: center;
+            justify-content: center;
+            gap: 25px;
+        }
+
+        /*Admin page*/
+        h1 {
+            font-family: Arial, Helvetica, sans-serif;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        table {
+            width:100%;
+            table-layout: fixed;
+        }
+
+        th, td {
+            padding: 20px 15px;
+            text-align: left;
+            font-weight: 500;
+            font-size: 12px;
+            color: black;
+            text-transform: 
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
