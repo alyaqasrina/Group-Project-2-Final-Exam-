@@ -25,10 +25,7 @@ if (isset($_POST['username'], $_POST['password'])) {
                 header("Location: admin.php");
                 exit();
             } else {
-                echo "<script type='text/javascript'>
-                    alert('Sorry, you are not an admin. Redirecting to home page.');
-                    window.location.href = 'index.php';
-                    </script>";
+               header("Location: login.php");
                 exit();
             }
         } else {
