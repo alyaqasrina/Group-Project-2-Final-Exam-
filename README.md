@@ -34,7 +34,7 @@ PIXLHUNT is a website aimed to guide visitors to trending and iconic places arou
 | Task                          | Assigned To       |
 |-------------------------------|-------------------|
 | Input Validation    | Yaya             |
-| Authentication        | Alya               |
+| Authentication        | Alya, Maryam               |
 | Authorization | Alya           |
 | XSS and CSRF Prevention           | Yaya              |
 | Database Security Principles     | Maryam             |
@@ -51,7 +51,7 @@ Authentication is the process of verifying the identity of a user. In our web ap
    <h5> Methods Used or Implemented: </h5>
    
    * Password hashing using password_hash() and password_verify()
-  
+   In line 
 
 
      
