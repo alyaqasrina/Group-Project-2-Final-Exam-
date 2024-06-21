@@ -29,8 +29,20 @@ PIXLHUNT is a website aimed to guide visitors to trending and iconic places arou
 3. To prevent unauthorize access by implementing session management.
 4. File directory cannot be accessed by unauthorize user since it has been disabled.
 
+# Task Distribution
+
+| Task                          | Assigned To       |
+|-------------------------------|-------------------|
+| Input Validation    | Yaya             |
+| Authentication        | Alya               |
+| Authorization | Alya           |
+| XSS and CSRF Prevention           | Yaya              |
+| Database Security Principles     | Maryam             |
+| File Security Principles              | Maryam               |
+
 # Web Application Security Enhancements
 1) <h3> Input Validation </h3>
+
 
 
 
