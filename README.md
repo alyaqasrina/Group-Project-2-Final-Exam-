@@ -41,23 +41,34 @@ PIXLHUNT is a website aimed to guide visitors to trending and iconic places arou
 | File Security Principles              | Maryam               |
 
 # Web Application Security Enhancements
-1) <h3> Input Validation </h3>
+<h3> 1) Input Validation </h3>
 
 
 
 
-2) <h3> Authentication </h3>
+<h3> 2) Authentication </h3>
 Authentication is the process of verifying the identity of a user. In our web application, we can implement this through user login and registration functionalities.
-   <h5> Methods Used or Implemented: </h5>
+<h4> Methods Used or Implemented: </h4>
    
-   * Password hashing using password_hash() and password_verify()
-   In line 
+   * Password hashing using password_hash() and password_verify() <br>
+   
+The password_hash() function, which is a component of PHP's built-in secure password hashing capabilities, is used to implement password hashing in the excerpted register.php file. Below is the breakdown of the process:
 
+   1) In line 12, we collected user input from a form submission using the $_POST superglobal. This includes the user's chosen password among other details like username, email, and role. [Alya]
+   2) In lines 16 - 23, before hashing the password, the script performs basic validation where it checks if the password matches a confirmed password entry to prevent user errors in typing the password. It also checks if the email is in a valid format and if the essential fields are not empty. [Alya]
+   3) In line 25, once the input is validated, the script hashes the user's password using the password_hash() function. [Alya]
+   4) In lines 28-33, the hashed password is then stored in a session variable along with other user details. This is a temporary step before the user details, including the hashed password, are stored in a database.
+   5) 
+  
+   * Two-factor authentication through email verification <br>
+For this enhancement, we used 2FA via email verification where once the user has entered the relevant details which are username, email, and role, an OTP will be sent to them via email. Once the user has entered the correct OTP it will be redirected to the login page. Below is the breakdown of the process:
+
+   1) In line 
+   2) 
 
      
    * Secure session cookie settings
    * SSL Certificate
-   * Two-factor authentication through email verification
    * SQL injection Prevention in line 58-66 (register.php)
 
   
