@@ -46,6 +46,7 @@ Authentication is the process of verifying the identity of a user. In our web ap
    * Secure session cookie settings
    * SSL Certificate
    * Two-factor authentication through email verification
+   * SQL injection Prwvention 
   
 
 
