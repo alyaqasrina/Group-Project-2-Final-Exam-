@@ -79,6 +79,7 @@ For this enhancement, we used 2FA via email verification where once the user has
     <h5> Methods Used or Implemented: </h5>
   
     * Role-based access control (RBAC)
+    * CRUD
     * Session management
 
 
