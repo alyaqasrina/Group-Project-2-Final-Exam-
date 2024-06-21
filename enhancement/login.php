@@ -4,18 +4,19 @@ ob_start();
 require_once('db.php');
 require_once('auth_session.php');
 
-// Login script
+// Login script 
 if (isset($_POST['username'], $_POST['password'])) {
-    $username = stripslashes($_REQUEST['username']);    
-    $username = mysqli_real_escape_string($connection, $username);
-    $password = stripslashes($_REQUEST['password']);
-    $password = mysqli_real_escape_string($connection, $password);
-    // Check if user exist in the database
-    $query = "SELECT * FROM `users` WHERE username='$username'";
-    $result = mysqli_query($connection, $query) or die(mysqli_error($connection));
-    $rows = mysqli_num_rows($result);
+    $username = $_POST['username'];
+    $password = $_POST['password'];
+
+    // Prepare and bind, useful for sql injection prevention
+    $stmt = $connection->prepare("SELECT * FROM `users` WHERE username=?");
+    $stmt->bind_param("s", $username);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $rows = $result->num_rows;
     if ($rows == 1) {
-        $user = mysqli_fetch_assoc($result);
+        $user = $result->fetch_assoc();
         if (password_verify($password, $user['password'])) {
             $_SESSION['username'] = $user['username'];
             $_SESSION['email'] = $user['email'];
