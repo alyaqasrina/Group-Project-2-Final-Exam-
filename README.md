@@ -76,6 +76,7 @@ For this enhancement, we used 2FA via email verification where once the user has
 2) In lines 37-47, the PHPMailer library handles email-sending functionalities. The script is then set up to use Gmail's SMTP server with the supplied  password and username. The port 587 is used by the SMTPSecure protocol, which is configured to use STARTTLS, the standard for secure email transmission.
 3) In lines 49-56, the sender's email address is set to pixlhunt37@gmail.com with the name "PixlHunt". The email is structured in HTML and the recipient's email address is set to the user's email. In addition, the OTP is included in the body of the email with the subject line "Email Verification" and instructions for the user to use to confirm their email address.
 4) In lines 58-63, an SQL statement is prepared to insert the new user's details into the users database table which includes the username, email, hashed password, role, OTP, and a boolean is_verified flag set to false initially. The prepared statement is then executed, securely inserting the user data into the database. Upon successful sending of the verification email, the user is redirected to verification.php.
+5) In line 58-66,The code inserts a new user into a database table called users with the provided values for username, email, password, role, and otp (One-Time Password). The is_verified column is set to false by default. The code uses a prepared statement to prevent SQL injection attacks. After the query is executed, the script redirects the user to a page called verification.php.
       
 <h6> verification.php </h6>
 
@@ -86,7 +87,7 @@ For this enhancement, we used 2FA via email verification where once the user has
 
 
   
-* SQL injection Prevention in line 58-66 (register.php)
+
 
   
 
