@@ -4,12 +4,10 @@ require_once('auth_session.php');
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (isset($_POST['email']) && isset($_POST['new_password'])) {
-        // User has entered their email and new password
         $email = $_POST['email'];
         $new_password = $_POST['new_password'];
         $hashed_password = password_hash($new_password, PASSWORD_DEFAULT);
 
-        // Update the password in the users table
         $sql = "UPDATE users SET password = ? WHERE email = ?";
         $stmt = $connection->prepare($sql);
         $stmt->bind_param("ss", $hashed_password, $email);
@@ -17,11 +15,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         echo "<script type='text/javascript'>
                 alert('Your password has been updated. Redirecting to login page.');
-                window.location.href = 'login.php';
+                window.location.href = 'index.php';
               </script>";
     }
 } else {
-    // User has just navigated to resetPassword.php, show the form to enter their email and new password
     echo '<h1>Reset Password</h1>
     <form action="resetPassword.php" method="post">
             <input type="email" name="email" placeholder="Email" required>
