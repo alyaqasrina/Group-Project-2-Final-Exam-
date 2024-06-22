@@ -6,7 +6,6 @@ if (isset($_POST["verify"])) {
     $email = $_SESSION['mail'];
     $otp_code = trim($_POST['otp_code']);
 
-    // Retrieve OTP from the database for the specified email
     $sql = "SELECT otp FROM users WHERE email = ?";
     $stmt = $connection->prepare($sql);
     $stmt->bind_param('s', $email);
@@ -15,34 +14,26 @@ if (isset($_POST["verify"])) {
     $stmt->fetch();
     $stmt->close();
 
-    // Debugging statements
-    error_log("Stored OTP from DB: " . $stored_otp);
-    error_log("Entered OTP: " . $otp_code);
-    error_log("Email: " . $email);
-
-    if ($stored_otp != $otp_code) {
-        echo "<script>alert('Invalid OTP code');</script>";
-    } else {
-        // Update user verification status
+    if ($stored_otp == $otp_code) {
         $sql = "UPDATE users SET is_verified = 1 WHERE email = ?";
         $stmt = $connection->prepare($sql);
         $stmt->bind_param('s', $email);
         $stmt->execute();
 
-        // Check if update was successful
         if ($stmt->affected_rows > 0) {
-            // Clear the temp_user data and OTP from the session
             unset($_SESSION['temp_user']);
             unset($_SESSION['otp']);
             unset($_SESSION['mail']);
 
             echo "<script>
                 alert('Account verified successfully. You may sign in now.');
-                window.location.replace('login.php');
+                window.location.replace('index.php');
             </script>";
         } else {
             echo "<script>alert('Failed to verify account. Please try again.');</script>";
         }
+    } else {
+        echo "<script>alert('Invalid OTP code');</script>";
     }
 }
 ?>
