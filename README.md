@@ -109,7 +109,8 @@ For this,
 <h2> 5) Database Security Principles </h2>
 <h3> Methods Used or Implemented: </h3>
 
-* Included database with db.php with custom username & password.
+* Included database with db.php with custom username & password, The code uses the mysqli_connect() function to establish a connection to the MySQL database. The code checks if the connection was successful by using the ! operator to negate the result of the mysqli_connect() function. If the connection failed, the code uses the die() function to terminate the script and display an error message.
+
 
 <h2> 6) File Security Principles </h2>
 <h3> Methods Used or Implemented: </h3>
