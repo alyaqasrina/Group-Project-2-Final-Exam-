@@ -116,7 +116,7 @@ For this,
 <h2> 6) File Security Principles </h2>
 <h3> Methods Used or Implemented: </h3>
 
-* Disable file directory by removing 'Indexes' in httpd.conf (Options ~~Indexes~~ FollowSymLinks Includes ExecCGI)
-* Shortened the URL by creating .htacces file in htdocs to prevent any URL rewriting which can lead the attackers to make any changes to the folders.
+* Disable file directory by removing 'Indexes' in httpd.conf (Options ~~Indexes~~ FollowSymLinks Includes ExecCGI). Disabling directory indexing can improve security.
+* Shortened the URL by creating .htacces file in htdocs to prevent any URL rewriting which can lead the attackers to make any changes to the folders (the .htaccess file is shown below). 
   
    
