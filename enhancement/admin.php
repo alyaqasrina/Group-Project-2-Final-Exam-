@@ -52,6 +52,7 @@ $result = $connection->query($sql);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styleAfter.css">
+    <link rel="stylesheet" href="style2.css" />
     <title>Admin Page</title>
     <style>
 
@@ -110,7 +111,8 @@ $result = $connection->query($sql);
             </a>
         </div>
         <div>
-            <a href="./index.php" class="right">Home</a>
+            <a href="./admin.php" class="right">Admin</a>
+            <a href="./homepage.php" class="right">Home</a>
             <a href="./category.html" class="right">Category</a>
             <a href="./aboutUs.html" class="right">About Us</a>
             <a href="./contactUs.html" class="right">Contact Us</a>
