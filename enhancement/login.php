@@ -4,19 +4,17 @@ ob_start();
 require_once('db.php');
 require_once('auth_session.php');
 
-// Login script 
 if (isset($_POST['username'], $_POST['password'])) {
-    $username = $_POST['username'];
-    $password = $_POST['password'];
-
-    // Prepare and bind, useful for sql injection prevention
-    $stmt = $connection->prepare("SELECT * FROM `users` WHERE username=?");
-    $stmt->bind_param("s", $username);
-    $stmt->execute();
-    $result = $stmt->get_result();
-    $rows = $result->num_rows;
+    $username = stripslashes($_REQUEST['username']);    
+    $username = mysqli_real_escape_string($connection, $username);
+    $password = stripslashes($_REQUEST['password']);
+    $password = mysqli_real_escape_string($connection, $password);
+    
+    $query = "SELECT * FROM `users` WHERE username='$username'";
+    $result = mysqli_query($connection, $query) or die(mysqli_error($connection));
+    $rows = mysqli_num_rows($result);
     if ($rows == 1) {
-        $user = $result->fetch_assoc();
+        $user = mysqli_fetch_assoc($result);
         if (password_verify($password, $user['password'])) {
             $_SESSION['username'] = $user['username'];
             $_SESSION['email'] = $user['email'];
@@ -26,11 +24,10 @@ if (isset($_POST['username'], $_POST['password'])) {
                 header("Location: admin.php");
                 exit();
             } else {
-               header("Location: login.php");
+                header("Location: homepage.php");
                 exit();
             }
         } else {
-            // Increment failed attempts and set lockout time if necessary
             $query = "UPDATE `users` SET failed_attempts = failed_attempts + 1 WHERE username='$username'";
             mysqli_query($connection, $query) or die(mysqli_error($connection));
             if ($user['failed_attempts'] + 1 >= 5) {
@@ -59,7 +56,6 @@ if (isset($_POST['username'], $_POST['password'])) {
     include('login_form.php');
 }
 
-// End output buffering and flush output
 ob_end_flush();
 
 ?>
