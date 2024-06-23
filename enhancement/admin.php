@@ -266,3 +266,111 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </div>
 </body>
 </html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styleAfter.css">
+    <link rel="stylesheet" href="style2.css" />
+    <title>Admin Page</title>
+    <style>
+        /* Your existing styles */
+    </style>
+    <script>
+        function validateForm(form) {
+            const username = form.username.value.trim();
+            const email = form.email.value.trim();
+            const role = form.role.value.trim();
+            const password = form.password ? form.password.value.trim() : null;
+            
+            if (username === "" || email === "" || role === "" || (password !== null && password === "")) {
+                alert("All fields are required.");
+                return false;
+            }
+
+            const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailPattern.test(email)) {
+                alert("Please enter a valid email address.");
+                return false;
+            }
+
+            return true;
+        }
+    </script>
+</head>
+<body>
+<nav class="navbar">
+        <div class="navbar-one">
+            <a href="./index.php">
+                <img src="./media/logo.png" id="logo-nav" alt="PixlHunt Logo">
+                PixlHunt
+            </a>
+        </div>
+        <div>
+            <a href="./admin.php" class="right">Admin</a>
+            <a href="./homepage.php" class="right">Home</a>
+            <a href="./category.html" class="right">Category</a>
+            <a href="./aboutUs.html" class="right">About Us</a>
+            <a href="./contactUs.html" class="right">Contact Us</a>
+            <a href="./logout.php" class="right">Logout</a>
+        </div>
+    </nav>
+
+<h1>Welcome, Admin!</h1>
+<div class="admin">
+    <div class="section">
+        <h3>Create a new user:</h3>
+        <form action="" method="post" onsubmit="return validateForm(this);">
+            <input type="hidden" name="csrf_token" value="<?php echo generateCsrfToken(); ?>">
+            <input type="text" name="username" placeholder="Username" required>
+            <input type="email" name="email" placeholder="Email" required>
+            <input type="text" name="role" placeholder="Role" required>
+            <input type="password" name="password" placeholder="Password" required>
+            <input type="submit" name="create" value="Create">
+        </form>
+    </div>
+
+    <div class="section"> 
+    <h3>Update a user:</h3>
+    <form action="" method="post" onsubmit="return validateForm(this);">
+        <input type="hidden" name="csrf_token" value="<?php echo generateCsrfToken(); ?>">
+        <input type="text" name="username" placeholder="Username" required>
+        <input type="email" name="email" placeholder="New Email">
+        <input type="text" name="role" placeholder="New Role">
+        <input type="submit" name="update" value="Update">
+    </form>
+    </div>
+
+    <div class="section">
+    <h3>Delete a user:</h3>
+    <form action="" method="post" onsubmit="return validateForm(this);">
+        <input type="hidden" name="csrf_token" value="<?php echo generateCsrfToken(); ?>">
+        <input type="text" name="username" placeholder="Username" required>
+        <input type="submit" name="delete" value="Delete">
+    </form>
+    </div>
+
+    <div class="section">
+    <h3>List of users:</h3>
+    <table>
+        <tr>
+            <th>Username</th>
+            <th>Email</th>
+            <th>Role</th>
+        </tr>
+
+        <?php
+            while ($row = $result->fetch_assoc()) {
+                echo "<tr>";
+                echo "<td>" . htmlspecialchars($row["username"], ENT_QUOTES, 'UTF-8') . "</td>";
+                echo "<td>" . htmlspecialchars($row["email"], ENT_QUOTES, 'UTF-8') . "</td>";
+                echo "<td>" . htmlspecialchars($row["role"], ENT_QUOTES, 'UTF-8') . "</td>";
+                echo "</tr>";
+            }
+        ?>
+    </table> 
+    </div>
+</div>
+</body>
+</html>

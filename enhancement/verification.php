@@ -13,10 +13,12 @@ if (isset($_POST["verify"])) {
     $stmt->bind_result($stored_otp);
     $stmt->fetch();
     $stmt->close();
-    echo $otp_code;
-    echo $stored_otp;
-    
-    if ($stored_otp == $otp_code) {
+
+    // Ensure both OTPs are trimmed and converted to string for comparison
+    $stored_otp = (string) $stored_otp; // Ensure stored OTP is a string
+    $otp_code = (string) $otp_code; // Ensure entered OTP is a string
+
+    if ($stored_otp === $otp_code) { // Use strict comparison (===) for security
         $sql = "UPDATE users SET is_verified = 1 WHERE email = ?";
         $stmt = $connection->prepare($sql);
         $stmt->bind_param('s', $email);

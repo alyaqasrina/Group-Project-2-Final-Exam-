@@ -7,11 +7,6 @@ require_once 'db.php';
 require_once 'auth_session.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Validate CSRF token
-    if (!isset($_POST['csrf_token']) || !validateCsrfToken($_POST['csrf_token'])) {
-        die("CSRF token validation failed. <a href='register.php'>Go back</a>");
-    }
-
     // Sanitize and validate input
     $username = htmlspecialchars(trim($_POST["username"]), ENT_QUOTES, 'UTF-8');
     $email = htmlspecialchars(trim($_POST["email"]), ENT_QUOTES, 'UTF-8');
@@ -34,7 +29,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         die("Passwords do not match. <a href='register.php'>Go back</a>");
     }
 
-    // Proceed with registration
     if (!empty($username) && !empty($email) && !empty($password)) {
         $hashed_password = password_hash($password, PASSWORD_DEFAULT);
         $otp = rand(100000, 999999);
@@ -48,7 +42,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $_SESSION['otp'] = $otp;
         $_SESSION['mail'] = $email;
 
-        // Send email verification
         $mail = new PHPMailer(true);
 
         try {
@@ -57,7 +50,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $mail->Host = 'smtp.gmail.com';
             $mail->SMTPAuth = true;
             $mail->Username = 'pixlhunt37@gmail.com';
-            $mail->Password = 'absufjinicvsxsbf'; // Use a secure method to store credentials
+            $mail->Password = 'absufjinicvsxsbf'; // Make sure to use a secure method to store credentials
             $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
             $mail->Port = 587;
 
@@ -70,7 +63,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             $mail->send();
 
-            // Store user data in database
             $sql = "INSERT INTO users (username, email, password, role, otp, is_verified) VALUES (?, ?, ?, ?, ?, false)";
             $stmt = $connection->prepare($sql);
             $stmt->bind_param('sssss', $username, $email, $hashed_password, $role, $otp);
@@ -84,6 +76,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 }
 ?>
+
+
 
 
 <!DOCTYPE html>
@@ -184,7 +178,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <input class="password" type="password" id="confirm_password" name="confirm_password" required>
             <label for="role"> Role: (admin/user) </label>
             <input class="role" type="text" id="role" name="role" required>
-            <input type="hidden" name="csrf_token" value="<?php echo generateCsrfToken(); ?>">
             <input class="submit" type="submit" value="Register">
             <p> Already have an account? <a href="login.php">Login</a></p>
         </form> 
