@@ -7,21 +7,35 @@ require_once 'db.php';
 require_once 'auth_session.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $username = trim($_POST["username"]);
-    $email = trim($_POST["email"]);
-    $password = trim($_POST["password"]);
-    $confirm_password = trim($_POST["confirm_password"]);
-    $role = trim($_POST["role"]);
+    // Validate CSRF token
+    if (!isset($_POST['csrf_token']) || !validateCsrfToken($_POST['csrf_token'])) {
+        die("CSRF token validation failed. <a href='register.php'>Go back</a>");
+    }
 
+    // Sanitize and validate input
+    $username = htmlspecialchars(trim($_POST["username"]), ENT_QUOTES, 'UTF-8');
+    $email = htmlspecialchars(trim($_POST["email"]), ENT_QUOTES, 'UTF-8');
+    $password = htmlspecialchars(trim($_POST["password"]), ENT_QUOTES, 'UTF-8');
+    $confirm_password = htmlspecialchars(trim($_POST["confirm_password"]), ENT_QUOTES, 'UTF-8');
+    $role = htmlspecialchars(trim($_POST["role"]), ENT_QUOTES, 'UTF-8');
+
+    // Validate email
+    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        die("Invalid email format. <a href='register.php'>Go back</a>");
+    }
+
+    // Validate role
+    if ($role !== 'admin' && $role !== 'user') {
+        die("Role must be either 'admin' or 'user'. <a href='register.php'>Go back</a>");
+    }
+
+    // Validate password match
     if ($password !== $confirm_password) {
         die("Passwords do not match. <a href='register.php'>Go back</a>");
     }
 
+    // Proceed with registration
     if (!empty($username) && !empty($email) && !empty($password)) {
-        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            die("Invalid email format.");
-        }
-
         $hashed_password = password_hash($password, PASSWORD_DEFAULT);
         $otp = rand(100000, 999999);
 
@@ -34,6 +48,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $_SESSION['otp'] = $otp;
         $_SESSION['mail'] = $email;
 
+        // Send email verification
         $mail = new PHPMailer(true);
 
         try {
@@ -42,7 +57,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $mail->Host = 'smtp.gmail.com';
             $mail->SMTPAuth = true;
             $mail->Username = 'pixlhunt37@gmail.com';
-            $mail->Password = 'absufjinicvsxsbf';
+            $mail->Password = 'absufjinicvsxsbf'; // Use a secure method to store credentials
             $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
             $mail->Port = 587;
 
@@ -51,10 +66,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             $mail->isHTML(true);
             $mail->Subject = 'Email Verification';
-            $mail->Body = '<p>Your OTP is: <b style="font-size: 30px;">' . $otp . '</b></p>';
+            $mail->Body = '<p>Your OTP is: <b style="font-size: 30px;">' . htmlspecialchars($otp, ENT_QUOTES, 'UTF-8') . '</b></p>';
 
             $mail->send();
 
+            // Store user data in database
             $sql = "INSERT INTO users (username, email, password, role, otp, is_verified) VALUES (?, ?, ?, ?, ?, false)";
             $stmt = $connection->prepare($sql);
             $stmt->bind_param('sssss', $username, $email, $hashed_password, $role, $otp);
@@ -63,7 +79,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             header("Location: verification.php");
             exit();
         } catch (Exception $e) {
-            echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+            echo "Message could not be sent. Mailer Error: " . htmlspecialchars($mail->ErrorInfo, ENT_QUOTES, 'UTF-8');
         }
     }
 }
@@ -106,11 +122,58 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             cursor: pointer;
         }
     </style>
+    <script>
+        function validateForm() {
+            const username = document.getElementById('username').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const password = document.getElementById('password').value.trim();
+            const confirmPassword = document.getElementById('confirm_password').value.trim();
+            const role = document.getElementById('role').value.trim();
+
+            const usernamePattern = /^[a-zA-Z0-9_]{3,16}$/;
+            const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            const passwordPattern = /^.{6,}$/;
+            const rolePattern = /^(admin|user)$/;
+
+            if (!username || !email || !password || !confirmPassword || !role) {
+                alert("All fields are required.");
+                return false;
+            }
+
+            if (!usernamePattern.test(username)) {
+                alert("Username must be 3-16 characters long and can include letters, numbers, and underscores.");
+                return false;
+            }
+
+            if (!emailPattern.test(email)) {
+                alert("Please enter a valid email address.");
+                return false;
+            }
+
+            if (!passwordPattern.test(password)) {
+                alert("Password must be at least 6 characters long.");
+                return false;
+            }
+
+            if (password !== confirmPassword) {
+                alert("Passwords do not match.");
+                return false;
+            }
+
+            if (!rolePattern.test(role)) {
+                alert("Role must be either 'admin' or 'user'.");
+                return false;
+            }
+
+            return true;
+        }
+    </script>
 </head>
+
 <body>
     <div class="main">
         <h1>Register</h1>
-        <form class="form" action="register.php" method="post" autocomplete="off">
+        <form class="form" action="register.php" method="post" autocomplete="off" onsubmit="return validateForm();">
             <label for="username"> Username: </label>
             <input class="username" type="text" id="username" name="username" required>
             <label for="email"> Email: </label>
@@ -121,6 +184,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <input class="password" type="password" id="confirm_password" name="confirm_password" required>
             <label for="role"> Role: (admin/user) </label>
             <input class="role" type="text" id="role" name="role" required>
+            <input type="hidden" name="csrf_token" value="<?php echo generateCsrfToken(); ?>">
             <input class="submit" type="submit" value="Register">
             <p> Already have an account? <a href="login.php">Login</a></p>
         </form> 

@@ -13,7 +13,9 @@ if (isset($_POST["verify"])) {
     $stmt->bind_result($stored_otp);
     $stmt->fetch();
     $stmt->close();
-
+    echo $otp_code;
+    echo $stored_otp;
+    
     if ($stored_otp == $otp_code) {
         $sql = "UPDATE users SET is_verified = 1 WHERE email = ?";
         $stmt = $connection->prepare($sql);

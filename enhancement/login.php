@@ -53,9 +53,8 @@ if (isset($_POST['username'], $_POST['password'])) {
             </script>";
     }
 }else {
-    include('login_form.php');
+    include('login_form.html');
 }
 
 ob_end_flush();
 
-?>
