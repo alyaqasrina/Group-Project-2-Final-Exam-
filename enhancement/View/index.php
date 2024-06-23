@@ -13,18 +13,18 @@ if (!isset($_SESSION['user_id'])) {
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <link rel="stylesheet" href="style2.css">
+  <link rel="stylesheet" href="../style2.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
-    <script type="module" defer src="index.js"></script>
+    <script type="module" defer src="../public/index.js"></script>
     <script src="https://kit.fontawesome.com/3f986c7e46.js" crossorigin="anonymous"></script>
-    <link rel="icon" href="./media/logo.png">
+    <link rel="icon" href="../media/logo.png">
   <title>PixlHunt</title>
 </head>
 <body>
     <nav class="navbar">
         <div class="navbar-one">
             <a href="./login.php">
-                <img src="./media/logo.png" id="logo-nav" alt="PixlHunt Logo">
+                <img src="../media/logo.png" id="logo-nav" alt="PixlHunt Logo">
                 PixlHunt
             </a>
         </div>
@@ -33,7 +33,7 @@ if (!isset($_SESSION['user_id'])) {
             <a href="./category.html" class="right">Category</a>
             <a href="./aboutUs.html" class="right">About Us</a>
             <a href="./contactUs.html" class="right">Contact Us</a>
-            <a href="./logout.php" class="right">Logout</a>
+            <a href="../logout.php" class="right">Logout</a>
         </div>
     </nav>
     
@@ -91,13 +91,13 @@ if (!isset($_SESSION['user_id'])) {
           <div class="homepage-images">
             <p>Are you curious to see which one category's places is the most viewed? Here are the most viewed places from each category!</p>
               <div class="homepage-images-first">
-                <img src="./media/back.png" class="arrow" id="prevHomeButton">
+                <img src="../media/back.png" class="arrow" id="prevHomeButton">
                   <div class="image-holders-first-homepage">
-                    <img src="./media/review2.jpg" id="homepage-images-first-slide">
-                     <img src="./media2/ilhamGallery/ReviewIg1.png" style="display: none;">
-                     <img src="./imagesSunway/sunway1.jpg" style="display: none;">
+                    <img src="../media/review2.jpg" id="homepage-images-first-slide">
+                     <img src="../media2/ilhamGallery/ReviewIg1.png" style="display: none;">
+                     <img src="../imagesSunway/sunway1.jpg" style="display: none;">
                   </div>
-                    <img src="./media/next.png" class="arrow" id="nextHomeButton">
+                    <img src="../media/next.png" class="arrow" id="nextHomeButton">
               </div>
           </div>        
         </section>
@@ -125,22 +125,22 @@ if (!isset($_SESSION['user_id'])) {
        <div class="footer-socials">
           <div class="footer-socials-media">
             <a href="https://www.instagram.com/pixlhunt/" target="_blank">
-              <img src="media/instagram.png" alt="Instagram">
+              <img src="../media/instagram.png" alt="Instagram">
             </a>
             <h2>Social Media</h2>
           </div>
               <div class="socials-media-insta">
                 <a href="https://www.instagram.com/pixlhunt/" target="_blank">
-                  <img src="media/insta1.jpg" alt="Instagram Photo">
-                  <img src="media/insta2.jpg" alt="Instagram Photo">
+                  <img src="../media/insta1.jpg" alt="Instagram Photo">
+                  <img src="../media/insta2.jpg" alt="Instagram Photo">
                 </a>
               </div>
         
         
               <div class="socials-media-insta-second">
                 <a href="https://www.instagram.com/pixlhunt/" target="_blank">
-                  <img src="media/review1.jpg" alt="Instagram Photo">
-                  <img src="media/review2.jpg" alt="Instagram Photo">
+                  <img src="../media/review1.jpg" alt="Instagram Photo">
+                  <img src="../media/review2.jpg" alt="Instagram Photo">
                 </a>
               </div>
             </div>
@@ -150,12 +150,12 @@ if (!isset($_SESSION['user_id'])) {
             <div class="footer-contact">
               <h2>Contact Information</h2>
               <div class="footer-contact-email">
-                <img src="media/mail.png"alt="Gmail">
+                <img src="../media/mail.png"alt="Gmail">
                 <h3>pixlHunt.pixl@gmail.com</h3>
               </div>
         
               <div class="footer-contact-phone">
-                <img src="media/phone-call.png" alt="Phone Number">
+                <img src="../media/phone-call.png" alt="Phone Number">
                 <h3>+60 1234 56789</h3>
               </div>
             </div>

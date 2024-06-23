@@ -24,7 +24,7 @@ if (isset($_POST['username'], $_POST['password'])) {
                 header("Location: admin.php");
                 exit();
             } else {
-                header("Location: homepage.php");
+                header("Location: View/index.php");
                 exit();
             }
         } else {

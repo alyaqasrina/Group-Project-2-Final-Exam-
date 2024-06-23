@@ -29,65 +29,62 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         die("Passwords do not match. <a href='register.php'>Go back</a>");
     }
 
-    if (!empty($username) && !empty($email) && !empty($password)) {
-        $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-        $otp = rand(100000, 999999);
+    // Hash password
+    $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
-        $_SESSION['temp_user'] = [
-            'username' => $username,
-            'email' => $email,
-            'password' => $hashed_password,
-            'role' => $role
-        ];
-        $_SESSION['otp'] = $otp;
-        $_SESSION['mail'] = $email;
+    // Generate OTP
+    $otp = rand(100000, 999999);
 
-        $mail = new PHPMailer(true);
+    // Store user data and OTP in session for verification
+    $_SESSION['temp_user'] = [
+        'username' => $username,
+        'email' => $email,
+        'password' => $hashed_password,
+        'role' => $role
+    ];
+    $_SESSION['otp'] = $otp;
+    $_SESSION['mail'] = $email;
 
-        try {
-            $mail->SMTPDebug = 2;
-            $mail->isSMTP();
-            $mail->Host = 'smtp.gmail.com';
-            $mail->SMTPAuth = true;
-            $mail->Username = 'pixlhunt37@gmail.com';
-            $mail->Password = 'absufjinicvsxsbf'; // Make sure to use a secure method to store credentials
-            $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
-            $mail->Port = 587;
+    // Send verification email
+    $mail = new PHPMailer(true);
 
-            $mail->setFrom('pixlhunt37@gmail.com', 'PixlHunt');
-            $mail->addAddress($email, $username);
+    try {
+        $mail->isSMTP();
+        $mail->Host = 'smtp.gmail.com';
+        $mail->SMTPAuth = true;
+        $mail->Username = 'pixlhunt37@gmail.com';
+        $mail->Password = 'absufjinicvsxsbf'; // Replace with your actual password or use secure storage method
+        $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+        $mail->Port = 587;
 
-            $mail->isHTML(true);
-            $mail->Subject = 'Email Verification';
-            $mail->Body = '<p>Your OTP is: <b style="font-size: 30px;">' . htmlspecialchars($otp, ENT_QUOTES, 'UTF-8') . '</b></p>';
+        $mail->setFrom('pixlhunt37@gmail.com', 'PixlHunt');
+        $mail->addAddress($email, $username);
 
-            $mail->send();
+        $mail->isHTML(true);
+        $mail->Subject = 'Email Verification';
+        $mail->Body = '<p>Your OTP is: <b style="font-size: 30px;">' . htmlspecialchars($otp, ENT_QUOTES, 'UTF-8') . '</b></p>';
 
-            $sql = "INSERT INTO users (username, email, password, role, otp, is_verified) VALUES (?, ?, ?, ?, ?, false)";
-            $stmt = $connection->prepare($sql);
-            $stmt->bind_param('sssss', $username, $email, $hashed_password, $role, $otp);
-            $stmt->execute();
+        $mail->send();
 
-            header("Location: verification.php");
-            exit();
-        } catch (Exception $e) {
-            echo "Message could not be sent. Mailer Error: " . htmlspecialchars($mail->ErrorInfo, ENT_QUOTES, 'UTF-8');
-        }
+        // Insert user data into database
+        $sql = "INSERT INTO users (username, email, password, role, otp, is_verified) VALUES (?, ?, ?, ?, ?, false)";
+        $stmt = $connection->prepare($sql);
+        $stmt->bind_param('sssss', $username, $email, $hashed_password, $role, $otp);
+        $stmt->execute();
+
+        header("Location: verification.php");
+        exit();
+    } catch (Exception $e) {
+        echo "Message could not be sent. Mailer Error: " . htmlspecialchars($mail->ErrorInfo, ENT_QUOTES, 'UTF-8');
     }
 }
 ?>
-
-
-
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
     <title>Register Page</title>
     <style>
         form {
@@ -168,6 +165,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <div class="main">
         <h1>Register</h1>
         <form class="form" action="register.php" method="post" autocomplete="off" onsubmit="return validateForm();">
+            <input type="hidden" name="csrf_token" value="<?php echo generateCsrfToken(); ?>">
             <label for="username"> Username: </label>
             <input class="username" type="text" id="username" name="username" required>
             <label for="email"> Email: </label>
