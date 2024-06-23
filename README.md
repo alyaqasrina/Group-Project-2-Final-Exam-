@@ -51,7 +51,7 @@ PIXLHUNT is a website aimed to guide visitors to trending and iconic places arou
    
 <h4> A. Password hashing using password_hash() and password_verify() </h4>
 
-   The password_hash() function, which is a component of PHP's built-in secure password hashing capabilities, is used to implement password hashing in the excerpted register.php file. Below is the breakdown of the process:
+   The password_hash() function, which is a component of PHP's built-in secure password hashing capabilities, is used to implement password hashing in the excerpted register.php file. 
 
 <h6>register.php</h6>
 
@@ -62,7 +62,7 @@ PIXLHUNT is a website aimed to guide visitors to trending and iconic places arou
 
 <h6>index.php</h6>
 
-1) After registering, the user is redirected to login.php to submit their username, password, and role. The server then retrieves the hashed password for the submitted username from the database, if it exists.
+1) After registering, the user is redirected to login.php to submit their username, password, and role. The server retrieves the hashed password for the submitted username from the database if it exists.
 2) In line 19, the script uses the password_verify() function to compare the submitted password with the stored hashed password. If password_verify($password, $user['password']) returns true, the user is authenticated. If it returns false, the user is not authenticated.
    
 <h4> B. Two-factor authentication through email verification </h4>
@@ -80,7 +80,7 @@ For this enhancement, we added 2FA via email. The user enters their username, em
 <h6> verification.php </h6>
 
 1) This page handles OTP verification, where the user inputs the OTP sent to their email to complete 2FA.
-2) In lines 23-46, the script compares the session-stored OTP ($stored_otp) with the user-entered OTP ($otp_code). If they don't match, the user gets an "Invalid OTP code" message. If they match, the script updates the user's verification status in the database, setting is_verified to true for the user's email. It then clears the session data and alerts the user that their account is verified, redirecting them to index.php. If the update fails, the user is asked to try the verification again.
+2) In lines 23-46, the script compares the session-stored OTP ($stored_otp) with the user-entered OTP ($otp_code). The user gets an "Invalid OTP code" message if they don't match. If they match, the script updates the user's verification status in the database, setting is_verified to true for the user's email. It then clears the session data and alerts users that their account is verified, redirecting them to index.php. If the update fails, the user is asked to try the verification again.
 
 <h4> C. Allow account lockout </h4>
 For enhancement, we've added a security feature to prevent brute-force attacks by implementing an account lockout policy. This policy temporarily disables a user account after several consecutive failed login attempts. The code updates the user's database record, focusing on the failed_attempts and lockout_time fields. Here's a simplified step-by-step explanation of the process:
@@ -110,12 +110,23 @@ For enhancement, we've added a security feature to prevent brute-force attacks b
 <h3> Methods Used or Implemented: </h3>
   
 <h4> A. Role-based access control (RBAC) </h4>
-For this,
+For this enhancement, we implement RBAC with a focus on managing user roles and controlling access to CRUD (Create, Read, Update, Delete) operations. There are two roles implemented which are user and admin, admins have full access to CRUD functionalities, while regular users have restricted access, primarily limited to viewing pages. The implementation is demonstrated using index.php for user authentication and session management, and admin.php for managing users.
+
+User sessions are managed to maintain their authenticated state and permissions throughout their interaction with the system.
+
+<h6> admin.php </h6>
+
+1) To ensure that only admins can access the admin page and perform CRUD operations, the session role is checked at the beginning of admin.php. If the user is not an admin, they are redirected to the homepage or login page with an appropriate message.
+2) In the admin.php page, admins can perform the following CRUD operations on user data:
+     * Create: Admins can add new users to the system by providing a username, email, role, and password. The password is securely hashed before being stored in the database.
+     * Read: The application displays a table of all users to the admin  with details such as username, email, and role. It provides a comprehensive view of all user accounts managed within the system.
+     * Update: Admins can modify existing user details. They can change a user’s email or role but do not directly alter passwords in this function.
+     * Delete: Admins can remove users from the system. This operation requires the username of the user to be deleted and ensures that only the specified account is affected.
 
 
 
 <h4> C. Session management </h4>
-
+For this enhancement, user sessions are managed to maintain their authenticated state and permissions throughout their interaction with the system.
 
 
 <h2> 4) XSS and CSRF Prevention </h2>
