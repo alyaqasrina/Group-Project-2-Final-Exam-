@@ -2,10 +2,17 @@
 require_once 'auth_session.php';
 require_once 'db.php';
 
+session_start();
+
+if (!isset($_SESSION['mail'])) {
+    die("Error: Mail session variable not set. <a href='index.php'>Login</a>");
+}
+
 if (isset($_POST["verify"])) {
     $email = $_SESSION['mail'];
     $otp_code = trim($_POST['otp_code']);
 
+    // Retrieve OTP from the database for the specified email
     $sql = "SELECT otp FROM users WHERE email = ?";
     $stmt = $connection->prepare($sql);
     $stmt->bind_param('s', $email);
@@ -25,13 +32,14 @@ if (isset($_POST["verify"])) {
         $stmt->execute();
 
         if ($stmt->affected_rows > 0) {
+            session_regenerate_id(true);
             unset($_SESSION['temp_user']);
             unset($_SESSION['otp']);
             unset($_SESSION['mail']);
 
             echo "<script>
                 alert('Account verified successfully. You may sign in now.');
-                window.location.replace('login.php');
+                window.location.replace('index.php');
             </script>";
         } else {
             echo "<script>alert('Failed to verify account. Please try again.');</script>";
@@ -48,7 +56,6 @@ if (isset($_POST["verify"])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
     <link rel="stylesheet" href="style.css">
     <title>Verification</title>
