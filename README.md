@@ -269,5 +269,6 @@ For this enhancement, user sessions are managed to maintain their authenticated 
 
 * Disable file directory by removing 'Indexes' in httpd.conf (Options ~~Indexes~~ FollowSymLinks Includes ExecCGI). Disabling directory indexing can improve security.
 * Shortened the URL by creating .htacces file in htdocs to prevent any URL rewriting which can lead the attackers to make any changes to the folders (the .htaccess file is shown below). 
-  
+  ![image](https://github.com/alyaqasrina/Group-Project-2-Final-Exam-/assets/154775061/7729d0dc-68fc-40e8-be09-163cbcf1baa0)
+
    
