@@ -136,7 +136,7 @@ For this enhancement, we added 2FA via email. The user enters their username, em
 <h4> C. Allow account lockout </h4>
 For enhancement, we've added a security feature to prevent brute-force attacks by implementing an account lockout policy. This policy temporarily disables a user account after several consecutive failed login attempts. The code updates the user's database record, focusing on the failed_attempts and lockout_time fields. 
 
-<h6> index.php </h6>
+<h6> login.php </h6>
 
 1) In lines 31-32, the code constructs and executes an SQL query to increment the failed_attempts counter for a user. If the query fails, an error message is displayed.
 2) In lines 33-41, the code checks if failed_attempts reach 5. If so, it updates the lockout_time in the database with the current time, alerts the user about the maximum failed attempts, and redirects them to resetPassword.php. The exit() function then stops further script execution.
@@ -179,7 +179,7 @@ For this enhancement, user sessions are managed to maintain their authenticated 
 
 <h5> Session Usage Across Pages: </h5>
 
-1) In index.php, sessions manage user login status and role, directing users to appropriate pages based on their roles.
+1) In login.php, sessions manage user login status and role, directing users to appropriate pages based on their roles.
 2) In admin.php, sessions ensure only users with admin roles can access and manage user data.
 3) The auth_session.php file typically includes functions that check and maintain session state, providing a consistent way to verify user authentication and roles across different pages.
 
