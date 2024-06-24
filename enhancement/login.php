@@ -5,14 +5,16 @@ require_once('db.php');
 require_once('auth_session.php');
 
 if (isset($_POST['username'], $_POST['password'])) {
-    $username = stripslashes($_REQUEST['username']);    
-    $username = mysqli_real_escape_string($connection, $username);
-    $password = stripslashes($_REQUEST['password']);
-    $password = mysqli_real_escape_string($connection, $password);
-    
-    $query = "SELECT * FROM `users` WHERE username='$username'";
-    $result = mysqli_query($connection, $query) or die(mysqli_error($connection));
+    $username = $_REQUEST['username'];
+    $password = $_REQUEST['password'];
+
+    // Prepare a statement to select the user
+    $stmt = mysqli_prepare($connection, "SELECT * FROM `users` WHERE username=?");
+    mysqli_stmt_bind_param($stmt, "s", $username);
+    mysqli_stmt_execute($stmt);
+    $result = mysqli_stmt_get_result($stmt);
     $rows = mysqli_num_rows($result);
+
     if ($rows == 1) {
         $user = mysqli_fetch_assoc($result);
         if (password_verify($password, $user['password'])) {
@@ -24,16 +26,21 @@ if (isset($_POST['username'], $_POST['password'])) {
                 header("Location: admin.php");
                 exit();
             } else {
-                header("Location: View/index.php");
+                header("Location: homepage.php");
                 exit();
             }
         } else {
-            $query = "UPDATE `users` SET failed_attempts = failed_attempts + 1 WHERE username='$username'";
-            mysqli_query($connection, $query) or die(mysqli_error($connection));
+            // Prepare a statement to update the failed attempts
+            $stmt = mysqli_prepare($connection, "UPDATE `users` SET failed_attempts = failed_attempts + 1 WHERE username=?");
+            mysqli_stmt_bind_param($stmt, "s", $username);
+            mysqli_stmt_execute($stmt);
+
             if ($user['failed_attempts'] + 1 >= 5) {
-                $query = "UPDATE `users` SET lockout_time = " . time() . " WHERE username='$username'";
-                mysqli_query($connection, $query) or die(mysqli_error($connection));
-                 // Redirect to resetPassword.php
+                // Prepare a statement to update the lockout time
+                $stmt = mysqli_prepare($connection, "UPDATE `users` SET lockout_time =? WHERE username=?");
+                mysqli_stmt_bind_param($stmt, "is", time(), $username);
+                mysqli_stmt_execute($stmt);
+                // Redirect to resetPassword.php
                 echo "<script type='text/javascript'>
                 alert('You have reached the maximum number of failed attempts. Redirecting to password reset page.');
                 window.location.href = 'resetPassword.php';
@@ -41,20 +48,19 @@ if (isset($_POST['username'], $_POST['password'])) {
                 exit();
             }
         }
-            echo "<script type='text/javascript'>
-                alert('Password is incorrect. Redirecting to login page.');
-                window.location.href = 'login.php';
-                </script>";
+        echo "<script type='text/javascript'>
+            alert('Password is incorrect. Redirecting to login page.');
+            window.location.href = 'index.php';
+            </script>";
 
     } else {
         echo "<script type='text/javascript'>
             alert('No user found with that username. Redirecting to login page.');
-            window.location.href = 'login.php';
+            window.location.href = 'index.php';
             </script>";
     }
-}else {
+} else {
     include('login_form.html');
 }
 
 ob_end_flush();
-
