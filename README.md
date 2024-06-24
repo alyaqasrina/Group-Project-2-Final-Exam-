@@ -133,6 +133,74 @@ For this enhancement, user sessions are managed to maintain their authenticated 
 
 <h2> 4) XSS and CSRF Prevention </h2>
 <h3> Methods Used or Implemented: </h3>
+### 4) XSS and CSRF Prevention
+
+#### Methods Used or Implemented:
+
+##### admin.php page
+
+**Code Enhancements**
+
+**XSS (Cross-Site Scripting) Prevention**
+
+- **Implementation:**
+
+  - **Input Sanitization:** The script employs `htmlspecialchars()` function to sanitize user inputs (`$_POST['username']`, `$_POST['email']`, `$_POST['role']`) before processing them further. This function converts special characters to HTML entities, preventing any potential XSS attacks by ensuring that user-provided data is treated as plain text when echoed back into HTML context.
+
+    ```php
+    $username = htmlspecialchars(trim($_POST['username']), ENT_QUOTES, 'UTF-8');
+    ```
+
+  - **Output Escaping:** When displaying user data in the HTML table (`<td>`), each echoed variable (`$row["username"]`, `$row["email"]`, `$row["role"]`) is also passed through `htmlspecialchars()` to ensure that any HTML special characters are encoded. This practice prevents XSS attacks when rendering dynamic content retrieved from the database.
+
+    ```php
+    echo "<td>" . htmlspecialchars($row["username"], ENT_QUOTES, 'UTF-8') . "</td>";
+    ```
+
+**CSRF (Cross-Site Request Forgery) Prevention**
+
+- **register.php, resetPassword.php:**
+
+  - **Implementation:**
+
+    - **CSRF Token Usage:** Each form in the script includes a hidden input field (`<input type="hidden" name="csrf_token" ...>`) that contains a CSRF token. This token is generated using a server-side function (`generateCsrfToken()`) and validated against the token stored in the session (`validateCsrfToken()` function) before processing any form submission (create, update, delete).
+
+      ```php
+      <input type="hidden" name="csrf_token" value="<?php echo generateCsrfToken(); ?>">
+      ```
+
+    - **Token Validation:** Before executing any user operation (create, update, delete), the script checks if the CSRF token submitted (`$_POST['csrf_token']`) matches the token stored in the session. If the tokens do not match, the script terminates the operation with an error message, preventing CSRF attacks by ensuring that the request originates from the expected user session.
+
+      ```php
+      if (!isset($_POST['csrf_token']) || !validateCsrfToken($_POST['csrf_token'])) {
+          die("CSRF token validation failed. <a href='register.php'>Go back</a>");
+      }
+      ```
+
+##### register.php page
+
+**XSS (Cross-Site Scripting) Prevention**
+
+- **Implementation:**
+
+  - **Input Sanitization:** Uses `htmlspecialchars()` function to sanitize user inputs retrieved via `$_POST` before processing or displaying them in HTML context, preventing XSS attacks by converting special characters to HTML entities.
+
+  - **Output Escaping:** Ensures that dynamic data echoed into HTML (e.g., OTP in the email body) is passed through `htmlspecialchars()` to encode special characters, ensuring secure rendering of user-provided content.
+
+
+**Input Validation also used login.php, admin**
+
+- **Sanitization and Validation:** Validates email format using `filter_var()` with `FILTER_VALIDATE_EMAIL` filter to ensure correct email format before proceeding with registration.
+
+  - Validates role input to ensure it's either 'admin' or 'user', preventing unauthorized role types from being accepted.
+
+  - Validates password and confirm password fields to ensure they match before processing registration.
+
+- **Server-Side and Client-Side Validation**
+
+  - **JavaScript Function (`validateForm()`):** Implements client-side validation using JavaScript to check for required fields, correct format of inputs (username, email), password length, and matching passwords before submitting the form.
+
+  - Provides immediate feedback to users on invalid inputs, reducing unnecessary server requests and improving user experience.
 
 <h2> 5) Database Security Principles </h2>
 <h3> Methods Used or Implemented: </h3>
