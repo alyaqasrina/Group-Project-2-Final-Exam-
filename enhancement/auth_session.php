@@ -8,6 +8,9 @@ session_set_cookie_params([
     'httponly' => true
 ]);
 
+    session_start();
+
+
 // Generate a unique user ID if not set
 if (!isset($_SESSION['user_id'])) {
     $_SESSION['user_id'] = uniqid();
@@ -16,7 +19,6 @@ if (!isset($_SESSION['user_id'])) {
 
 // Generate CSRF token if not already set
 if (empty($_SESSION['csrf_token'])) {
-    session_start();
     session_regenerate_id(true);
     $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
 }
