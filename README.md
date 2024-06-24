@@ -259,7 +259,12 @@ For this enhancement, user sessions are managed to maintain their authenticated 
 
 * Included database with db.php with custom username & password, The code uses the `mysqliconnect()` function to establish a connection to the MySQL database. The code checks if the connection was successful by using the  `!` operator to negate the result of the mysqli_connect() function. If the connection failed, the code uses the `die()` function to terminate the script and display an error message.
 * SQL Injection Prevention is applied on register.php and login.php pages. 
-##### register.php page: in lines 70-78, 
+##### register.php page: 
+* In lines 70-78, The SQL statement is defined with placeholders `? ` for the user input values.
+* The `prepare() ` method creates a statement object from the SQL query. This object will be used to execute the query with the user input values.
+* The `bind_param()` method binds the user input values to the placeholders in the SQL query. The first argument `sssss ` specifies the data types of the parameters: `s`  stands for string, The number of s characters matches the number of parameters.
+* The `execute()` method executes the prepared statement with the bound parameters.
+   
 ##### login.php page: 
 
 <h2> 6) File Security Principles </h2>
