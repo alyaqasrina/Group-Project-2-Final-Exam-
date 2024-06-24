@@ -66,7 +66,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         $mail->send();
 
-        // Insert user data into database
+        // Insert user data into database (SQL injection prevention)
         $sql = "INSERT INTO users (username, email, password, role, otp, is_verified) VALUES (?, ?, ?, ?, ?, false)";
         $stmt = $connection->prepare($sql);
         $stmt->bind_param('sssss', $username, $email, $hashed_password, $role, $otp);
