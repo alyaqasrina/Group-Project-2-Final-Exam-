@@ -262,7 +262,8 @@ For this enhancement, user sessions are managed to maintain their authenticated 
 * The `bind_param()` method binds the user input values to the placeholders in the SQL query. The first argument `sssss ` specifies the data types of the parameters: `s`  stands for string, The number of s characters matches the number of parameters.
 * The `execute()` method executes the prepared statement with the bound parameters.
    
-##### login.php page: In line 12-16, prepared statements are used, which are `mysqli_prepare`, `mysqli_stmt_bind_param `, and `mysqli_stmt_execute `. These ensure that the user input is properly escaped and sanitized, preventing SQL injection attacks.
+##### login.php page: 
+* In line 12-16, prepared statements are used, which are `mysqli_prepare`, `mysqli_stmt_bind_param `, and `mysqli_stmt_execute `. These ensure that the user input is properly escaped and sanitized, preventing SQL injection attacks.
 
 <h2> 6) File Security Principles </h2>
 <h3> Methods Used or Implemented: </h3>
