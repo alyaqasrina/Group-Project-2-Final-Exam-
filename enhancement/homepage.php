@@ -4,7 +4,7 @@ require_once('../auth_session.php');
 
 // Check if the user is logged in, if not then redirect to login page
 if (!isset($_SESSION['user_id'])) {
-    header("Location: ../login.php");
+    header("Location: index.php");
     exit();
 }
 
@@ -23,13 +23,13 @@ if (!isset($_SESSION['user_id'])) {
 <body>
     <nav class="navbar">
         <div class="navbar-one">
-            <a href="./login.php">
+            <a href="homepage.html">
                 <img src="../media/logo.png" id="logo-nav" alt="PixlHunt Logo">
                 PixlHunt
             </a>
         </div>
         <div>
-            <a href="./index.php" class="right">Home</a>
+            <a href="homepage.php" class="right">Home</a>
             <a href="./category.html" class="right">Category</a>
             <a href="./aboutUs.html" class="right">About Us</a>
             <a href="./contactUs.html" class="right">Contact Us</a>
