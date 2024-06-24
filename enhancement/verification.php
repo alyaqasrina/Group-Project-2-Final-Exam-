@@ -2,6 +2,12 @@
 require_once 'auth_session.php';
 require_once 'db.php';
 
+session_start();
+
+if (!isset($_SESSION['mail'])) {
+    die("Error: Mail session variable not set. <a href='index.php'>Login</a>");
+}
+
 if (isset($_POST["verify"])) {
     $email = $_SESSION['mail'];
     $otp_code = trim($_POST['otp_code']);
