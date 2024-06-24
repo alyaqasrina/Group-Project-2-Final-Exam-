@@ -31,7 +31,7 @@ if (isset($_POST["verify"])) {
 
             echo "<script>
                 alert('Account verified successfully. You may sign in now.');
-                window.location.replace('login.php');
+                window.location.replace('index.php');
             </script>";
         } else {
             echo "<script>alert('Failed to verify account. Please try again.');</script>";
