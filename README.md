@@ -43,8 +43,60 @@ PIXLHUNT is a website aimed to guide visitors to trending and iconic places arou
 # Web Application Security Enhancements
 <h2> 1) Input Validation </h2>
 
+- **Method(Regular Expression Patterns)**
+  - Regex Patterns: Defined to enforce specific format constraints for certain input fields like username and role. These patterns ensure that inputs meet expected criteria (e.g., length, character set) before further processing or database interaction.
+    ```javascript
+    const usernamePattern = /^[a-zA-Z0-9_]{3,16}$/;
+    const rolePattern = /^(admin|user)$/;
+
+    if (!usernamePattern.test(username)) {
+        alert("Username must be 3-16 characters long and can include letters, numbers, and underscores.");
+        return false;
+    }
+
+    if (!rolePattern.test(role)) {
+        alert("Role must be either 'admin' or 'user'.");
+        return false;
+    }
+    ```
+- **Client-Side Validation:**
+  - JavaScript Function (`validateForm()`): Implemented to perform basic validation checks on form inputs before submission to the server. This client-side validation helps improve user experience by providing immediate feedback on required fields and format constraints before server-side processing.
+    ```javascript
+    function validateForm() {
+        const username = document.getElementById('username').value.trim();
+        const email = document.getElementById('email').value.trim();
+        const password = document.getElementById('password').value.trim();
+        const confirmPassword = document.getElementById('confirm_password').value.trim();
+        const role = document.getElementById('role').value.trim();
+
+        // Validation checks here
+
+        return true;  // Or false based on validation results
+    }
+    ```
+- **Sanitization and Validation Functions:**
+  - `htmlspecialchars()`: Used for sanitizing user inputs retrieved via `$_POST` before processing or displaying them in HTML context. This function converts special characters to HTML entities, preventing XSS attacks by ensuring that user-provided data is treated as plain text.
+    ```php
+    $username = htmlspecialchars(trim($_POST['username']), ENT_QUOTES, 'UTF-8');
+    ```
+  - `filter_var()`: Employed to validate email addresses using the `FILTER_VALIDATE_EMAIL` filter. This function checks if the provided email format is valid according to RFC standards before proceeding with database operations.
+    ```php
+    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        die("Invalid email format. <a href='admin.php'>Go back</a>");
+    }
+    ```
 
 
+
+
+Pages with input validation for both client-side and server-side:
+- `aboutUS.html`
+- `scriptAboutUS.js`
+- `contactUS.html`
+- `script.js`
+- `login_form.php`
+- `register.php`
+- `admin.php`
 
 <h2> 2) Authentication </h2>
 <h3> Methods Used or Implemented: </h3>
