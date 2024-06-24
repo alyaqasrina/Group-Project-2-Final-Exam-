@@ -164,21 +164,30 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <body>
     <div class="main">
         <h1>Register</h1>
-        <form class="form" action="register.php" method="post" autocomplete="off" onsubmit="return validateForm();">
-            <input type="hidden" name="csrf_token" value="<?php echo generateCsrfToken(); ?>">
-            <label for="username"> Username: </label>
-            <input class="username" type="text" id="username" name="username" required>
-            <label for="email"> Email: </label>
-            <input class="email" type="email" id="email" name="email" required>
-            <label for="password">Password:</label>
-            <input class="password" type="password" id="password" name="password" required>
-            <label for="confirm_password"> Confirm Password: </label>
-            <input class="password" type="password" id="confirm_password" name="confirm_password" required>
-            <label for="role"> Role: (admin/user) </label>
-            <input class="role" type="text" id="role" name="role" required>
-            <input class="submit" type="submit" value="Register">
-            <p> Already have an account? <a href="login.php">Login</a></p>
-        </form> 
+       <form class="form" action="register.php" method="post" autocomplete="off" onsubmit="return validateForm();">
+    <!-- Remove the CSRF token input field -->
+    <!-- <input type="hidden" name="csrf_token" value="<?php echo generateCsrfToken(); ?>"> -->
+    
+    <label for="username"> Username: </label>
+    <input class="username" type="text" id="username" name="username" required>
+    
+    <label for="email"> Email: </label>
+    <input class="email" type="email" id="email" name="email" required>
+    
+    <label for="password">Password:</label>
+    <input class="password" type="password" id="password" name="password" required>
+    
+    <label for="confirm_password"> Confirm Password: </label>
+    <input class="password" type="password" id="confirm_password" name="confirm_password" required>
+    
+    <label for="role"> Role: (admin/user) </label>
+    <input class="role" type="text" id="role" name="role" required>
+    
+    <input class="submit" type="submit" value="Register">
+    
+    <p> Already have an account? <a href="login.php">Login</a></p>
+   </form>
+
     </div>
 </body>
 </html>
