@@ -255,7 +255,7 @@ For this enhancement, user sessions are managed to maintain their authenticated 
 <h3> Methods Used or Implemented: </h3>
 
 * Included database with db.php with custom username & password, The code uses the `mysqliconnect()` function to establish a connection to the MySQL database. The code checks if the connection was successful by using the  `!` operator to negate the result of the mysqli_connect() function. If the connection failed, the code uses the `die()` function to terminate the script and display an error message.
-* SQL Injection Prevention is applied on register.php, login.php, admin.php pages.
+* SQL Injection Prevention is applied on register.php, login.php, admin.php and verification.php pages.
   
 ##### register.php page: 
 * In lines 70-78, The SQL statement is defined with placeholders `? ` for the user input values.
@@ -270,6 +270,10 @@ For this enhancement, user sessions are managed to maintain their authenticated 
 * In lines from 56-64, The code is inserting a new user into the `users` table in the database.
 * The `prepare()` method is used to prepare the SQL query for execution. This step separates the SQL code from the user input, which helps prevent SQL injection attacks.
 * If the statement is prepared successfully, the code binds the user input values to the placeholders using `bind_param()`.
+
+  
+##### verifiation.php page:
+* It uses prepared statements with `mysqli_prepare` , `mysqli_stmt_bind_param`, and `mysqli_stmt_execute` to prevent SQL injection attacks. This ensures that user input is properly escaped and sanitized, which helps protect the database from malicious input.
 
 <h2> 6) File Security Principles </h2>
 <h3> Methods Used or Implemented: </h3>
