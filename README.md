@@ -13,7 +13,7 @@ Innovators
 PIXLHUNT
 
 # Introduction
-Improved version of Chillax Cafe web app with security features added onto the original web technologies class project.
+Improved version of PIXLHUNT web app with security features added onto the original web technologies class project.
 Original owners are:
 
 * Nooralya Qasrina Binti Zuraimi 
