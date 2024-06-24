@@ -273,7 +273,7 @@ For this enhancement, user sessions are managed to maintain their authenticated 
 
   
 ##### verifiation.php page:
-* It uses prepared statements with `mysqli_prepare` , `mysqli_stmt_bind_param`, and `mysqli_stmt_execute` to prevent SQL injection attacks. This ensures that user input is properly escaped and sanitized, which helps protect the database from malicious input.
+* In lines 21-25, It uses prepared statements with `mysqli_prepare` , `mysqli_stmt_bind_param`, and `mysqli_stmt_execute` to prevent SQL injection attacks. This ensures that user input is properly escaped and sanitized, which helps protect the database from malicious input.
 
 <h2> 6) File Security Principles </h2>
 <h3> Methods Used or Implemented: </h3>
