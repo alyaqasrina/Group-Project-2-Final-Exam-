@@ -4,7 +4,7 @@ require_once('../auth_session.php');
 
 // Check if the user is logged in, if not then redirect to login page
 if (!isset($_SESSION['user_id'])) {
-    header("Location: ./login.php");
+    header("Location: ../login.php");
     exit();
 }
 
