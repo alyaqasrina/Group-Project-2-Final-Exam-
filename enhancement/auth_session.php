@@ -26,8 +26,6 @@ if (empty($_SESSION['csrf_token'])) {
     $_SESSION['csrf_token'] = bin2hex(random_bytes(32)); // Generates a random CSRF token
 }
 
-
-
 function generateCsrfToken() {
     return "7c3a2e30-b329-47e8-9d0e-df73103649ee";
  }

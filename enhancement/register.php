@@ -7,6 +7,11 @@ require_once 'db.php';
 require_once 'auth_session.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Validate CSRF token
+    if (!isset($_POST['csrf_token']) || !validateCsrfToken($_POST['csrf_token'])) {
+        die("CSRF token validation failed. <a href='register.php'>Go back</a>");
+    }
+
     // Sanitize and validate input
     $username = htmlspecialchars(trim($_POST["username"]), ENT_QUOTES, 'UTF-8');
     $email = htmlspecialchars(trim($_POST["email"]), ENT_QUOTES, 'UTF-8');
@@ -66,7 +71,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         $mail->send();
 
-        // Insert user data into database (SQL injection prevention)
+        // Insert user data into database
         $sql = "INSERT INTO users (username, email, password, role, otp, is_verified) VALUES (?, ?, ?, ?, ?, false)";
         $stmt = $connection->prepare($sql);
         $stmt->bind_param('sssss', $username, $email, $hashed_password, $role, $otp);
@@ -164,30 +169,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <body>
     <div class="main">
         <h1>Register</h1>
-       <form class="form" action="register.php" method="post" autocomplete="off" onsubmit="return validateForm();">
-    <!-- Remove the CSRF token input field -->
-    <!-- <input type="hidden" name="csrf_token" value="<?php echo generateCsrfToken(); ?>"> -->
-    
-    <label for="username"> Username: </label>
-    <input class="username" type="text" id="username" name="username" required>
-    
-    <label for="email"> Email: </label>
-    <input class="email" type="email" id="email" name="email" required>
-    
-    <label for="password">Password:</label>
-    <input class="password" type="password" id="password" name="password" required>
-    
-    <label for="confirm_password"> Confirm Password: </label>
-    <input class="password" type="password" id="confirm_password" name="confirm_password" required>
-    
-    <label for="role"> Role: (admin/user) </label>
-    <input class="role" type="text" id="role" name="role" required>
-    
-    <input class="submit" type="submit" value="Register">
-    
-    <p> Already have an account? <a href="login.php">Login</a></p>
-   </form>
-
+        <form class="form" action="register.php" method="post" autocomplete="off" onsubmit="return validateForm();">
+         <!-- Remove the CSRF token input field -->
+            <input type="hidden" name="csrf_token" value="<?php echo generateCsrfToken(); ?>">
+            <label for="username"> Username: </label>
+            <input class="username" type="text" id="username" name="username" required>
+            <label for="email"> Email: </label>
+            <input class="email" type="email" id="email" name="email" required>
+            <label for="password">Password:</label>
+            <input class="password" type="password" id="password" name="password" required>
+            <label for="confirm_password"> Confirm Password: </label>
+            <input class="password" type="password" id="confirm_password" name="confirm_password" required>
+            <label for="role"> Role: (admin/user) </label>
+            <input class="role" type="text" id="role" name="role" required>
+            <input class="submit" type="submit" value="Register">
+            <p> Already have an account? <a href="index.php">Login</a></p>
+        </form> 
     </div>
 </body>
 </html>
