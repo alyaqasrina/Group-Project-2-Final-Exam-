@@ -265,6 +265,9 @@ For this enhancement, user sessions are managed to maintain their authenticated 
 ##### login.php page: 
 * In line 12-16, prepared statements are used, which are `mysqli_prepare`, `mysqli_stmt_bind_param `, and `mysqli_stmt_execute `. These ensure that the user input is properly escaped and sanitized, preventing SQL injection attacks.
 
+##### admin.php page:
+* In lines from 56-64
+
 <h2> 6) File Security Principles </h2>
 <h3> Methods Used or Implemented: </h3>
 
