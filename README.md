@@ -279,4 +279,7 @@ For this enhancement, user sessions are managed to maintain their authenticated 
   
   ![image](https://github.com/alyaqasrina/Group-Project-2-Final-Exam-/assets/154775061/7729d0dc-68fc-40e8-be09-163cbcf1baa0)
 
+#### Weekly Progress Report
+
+
    
