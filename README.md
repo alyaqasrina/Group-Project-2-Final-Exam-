@@ -283,7 +283,12 @@ For this enhancement, user sessions are managed to maintain their authenticated 
   
   ![image](https://github.com/alyaqasrina/Group-Project-2-Final-Exam-/assets/154775061/7729d0dc-68fc-40e8-be09-163cbcf1baa0)
 
-#### Weekly Progress Report
+#### References
 
+* SSL Implementation https://www.youtube.com/watch?v=AKZU3SBZhfo
+* Webappsec class handouts from our course instructor: Dr. Muhamad Sadry Abu Seman, DIS, KICT, IIUM
+
+#### Weekly Progress Report
+[Weekly Progress Report 2.pdf](https://github.com/alyaqasrina/Group-Project-2-Final-Exam-/blob/main/Weekly%20Progress%20Report%202.pdf))
 
    
