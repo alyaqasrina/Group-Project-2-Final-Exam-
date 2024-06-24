@@ -112,9 +112,9 @@ Pages with input validation for both client-side and server-side:
 3) In line 33, once the input is validated, the script hashes the user's password using the password_hash() function. 
 4) In lines 39-43, the hashed password is then stored in a session variable along with other user details. This is a temporary step before the user details, including the hashed password, are stored in a database.
 
-<h6>login.php</h6>
+<h6>index.php</h6>
 
-1) After registering, the user is redirected to login.php to submit their username, password, and role. The server retrieves the hashed password for the submitted username from the database if it exists.
+1) After registering, the user is redirected to index.php to submit their username, password, and role. The server retrieves the hashed password for the submitted username from the database if it exists.
 2) In line 18, the script uses the password_verify() function to compare the submitted password with the stored hashed password. If password_verify($password, $user['password']) returns true, the user is authenticated. If it returns false, the user is not authenticated.
    
 <h4> B. Two-factor authentication through email verification </h4>
@@ -136,7 +136,7 @@ For this enhancement, we added 2FA via email. The user enters their username, em
 <h4> C. Allow account lockout </h4>
 For enhancement, we've added a security feature to prevent brute-force attacks by implementing an account lockout policy. This policy temporarily disables a user account after several consecutive failed login attempts. The code updates the user's database record, focusing on the failed_attempts and lockout_time fields. 
 
-<h6> login.php </h6>
+<h6> index.php </h6>
 
 1) In lines 31-32, the code constructs and executes an SQL query to increment the failed_attempts counter for a user. If the query fails, an error message is displayed.
 2) In lines 33-41, the code checks if failed_attempts reach 5. If so, it updates the lockout_time in the database with the current time, alerts the user about the maximum failed attempts, and redirects them to resetPassword.php. The exit() function then stops further script execution.
@@ -169,7 +169,7 @@ For this enhancement, user sessions are managed to maintain their authenticated 
 
 <h5> Secure Session Handling: </h5>
 
-1) Sessions are initialized securely in login.php and other pages where needed. We start the session only if it’s not already active.
+1) Sessions are initialized securely in index.php and other pages where needed. We start the session only if it’s not already active.
 2) Cookies for sessions are configured to be transmitted only over secure HTTPS connections and are inaccessible to JavaScript (httponly), protecting against common web vulnerabilities.
 
 <h5> Session Initialization and ID Generation: </h5>
@@ -179,7 +179,7 @@ For this enhancement, user sessions are managed to maintain their authenticated 
 
 <h5> Session Usage Across Pages: </h5>
 
-1) In login.php, sessions manage user login status and role, directing users to appropriate pages based on their roles.
+1) In index.php, sessions manage user login status and role, directing users to appropriate pages based on their roles.
 2) In admin.php, sessions ensure only users with admin roles can access and manage user data.
 3) The auth_session.php file typically includes functions that check and maintain session state, providing a consistent way to verify user authentication and roles across different pages.
 
