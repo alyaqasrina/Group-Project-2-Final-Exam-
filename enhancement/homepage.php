@@ -1,6 +1,6 @@
 <?php
 
-require_once('../auth_session.php');
+require_once('auth_session.php');
 
 // Check if the user is logged in, if not then redirect to login page
 if (!isset($_SESSION['user_id'])) {
@@ -23,7 +23,7 @@ if (!isset($_SESSION['user_id'])) {
 <body>
     <nav class="navbar">
         <div class="navbar-one">
-            <a href="homepage.html">
+            <a href="homepage.php">
                 <img src="../media/logo.png" id="logo-nav" alt="PixlHunt Logo">
                 PixlHunt
             </a>
