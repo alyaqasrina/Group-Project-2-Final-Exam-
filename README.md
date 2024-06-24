@@ -185,9 +185,6 @@ For this enhancement, user sessions are managed to maintain their authenticated 
 
 <h2> 4) XSS and CSRF Prevention </h2>
 <h3> Methods Used or Implemented: </h3>
-### 4) XSS and CSRF Prevention
-
-#### Methods Used or Implemented:
 
 ##### admin.php page
 
